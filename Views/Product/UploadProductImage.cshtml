@@ -1,0 +1,81 @@
+﻿@model EmailDemo.ViewModels.ProductVM
+
+@{
+    ViewData["Title"] = "Upload Product Image";
+}
+
+<div class="container mt-5">
+    <h2 class="mb-4 text-center" style="font-family: 'Poppins', sans-serif; font-weight: 500; color: #333;">
+        Upload Image for @Model.Description
+    </h2>
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-sm rounded">
+                <img src="@Url.Action("GetProductImage", "Product", new { productId = Model.ProductId })"
+                     class="card-img-top"
+                     alt="@Model.Description"
+                     style="object-fit: contain; height: 350px;" />
+
+                <div class="card-body">
+                    <h5 class="card-title text-center">Product ID: @Model.ProductId</h5>
+                    <p class="card-text text-center text-muted">@Model.Description</p>
+                    <p class="card-text text-center fw-bold">$@Model.Price.ToString("N2")</p>
+
+                    @if (User.IsInRole("Manager"))
+                    {
+                        <form asp-action="UploadProductImage" asp-controller="Product" method="post" enctype="multipart/form-data">
+                            <input type="hidden" name="productId" value="@Model.ProductId" />
+
+                            <div class="mb-3">
+                                <label for="imageFile" class="form-label">Select Image</label>
+                                <input type="file" name="imageFile" class="form-control" accept="image/*" required />
+                            </div>
+
+                            <div class="d-flex justify-content-between">
+                                <a href="@Url.Action("Index", "Product")" class="btn btn-secondary">
+                                    <i class="bi bi-arrow-left"></i> Back
+                                </a>
+                                <button type="submit" class="btn btn-success">
+                                    <i class="bi bi-upload"></i> Upload Image
+                                </button>
+                            </div>
+                        </form>
+                    }
+                    else
+                    {
+                        <p class="text-danger text-center">You do not have permission to upload images.</p>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@{
+    var messageText = string.Empty;
+    var alertClass = string.Empty;
+
+    if (!string.IsNullOrEmpty(ViewBag.Message))
+    {
+        string message = ViewBag.Message.ToString();
+        string[] messageParts = message.Split(',');
+
+        var messageType = messageParts[0];
+        messageText = messageParts.Length > 1 ? messageParts[1] : string.Empty;
+
+        switch (messageType)
+        {
+            case "success": alertClass = "alert alert-success"; break;
+            case "warning": alertClass = "alert alert-warning"; break;
+            case "error": alertClass = "alert alert-danger"; break;
+        }
+    }
+}
+
+@if (!string.IsNullOrEmpty(messageText))
+{
+    <div class="@alertClass alert-dismissible fade show mt-3" role="alert">
+        @messageText
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
