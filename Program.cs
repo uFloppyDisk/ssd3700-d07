@@ -1,4 +1,4 @@
-﻿// File: Program.cs
+// File: Program.cs
 
 using EmailDemo.Data;
 using EmailDemo.Repositories;

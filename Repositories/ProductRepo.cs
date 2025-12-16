@@ -1,4 +1,4 @@
-﻿using EmailDemo.Data;
+using EmailDemo.Data;
 using EmailDemo.Models;
 using EmailDemo.ViewModels;
 

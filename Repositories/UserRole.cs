@@ -1,4 +1,4 @@
-﻿using EmailDemo.ViewModels;
+using EmailDemo.ViewModels;
 using Microsoft.AspNetCore.Identity;
 
 namespace EmailDemo.Repositories

@@ -1,4 +1,4 @@
-﻿using EmailDemo.Data;
+using EmailDemo.Data;
 using EmailDemo.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Rendering;
